@@ -1,2 +1,3 @@
-# wx-player
+# wxPlayer
+
 wxPython + OpenCV Camera Player
