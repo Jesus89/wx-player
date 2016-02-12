@@ -14,14 +14,17 @@ class Frame(wx.Frame):
     def __init__(self, parent):
         wx.Frame.__init__(self, parent, size=(640, 480))
 
-        camera = Camera(1)
-        video_view = VideoView(self, camera.capture_image, 35)
+        self.camera = Camera(1)
+        video_view = VideoView(self, self.capture, 35)
         video_view.play()
 
         box = wx.BoxSizer(wx.HORIZONTAL)
         box.Add(video_view, 1, wx.ALL | wx.EXPAND, 0)
         self.SetSizer(box)
         self.Centre()
+
+    def capture(self):
+        return self.camera.capture_image(flush=0)
 
 
 class MyApp(wx.App):
