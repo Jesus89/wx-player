@@ -23,7 +23,10 @@ class ImageView(wx.Panel):
 
         if black:
             self.SetBackgroundColour(wx.BLACK)
-        self.SetDoubleBuffered(True)
+
+        self.backBrush = wx.Brush(wx.BLACK, wx.SOLID)
+
+        # self.SetDoubleBuffered(True)
 
         self.Bind(wx.EVT_SHOW, self.on_show)
         self.Bind(wx.EVT_PAINT, self.on_paint)
@@ -39,7 +42,9 @@ class ImageView(wx.Panel):
 
     def on_paint(self, event):
         if not self.hide:
-            dc = wx.PaintDC(self)
+            dc = wx.BufferedPaintDC(self)
+            dc.SetBackground(self.backBrush)
+            dc.Clear()
             dc.DrawBitmap(self.bitmap, self.x_offset, self.y_offset)
 
     def on_resize(self, size):
