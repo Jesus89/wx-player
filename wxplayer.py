@@ -15,11 +15,11 @@ class Frame(wx.Frame):
         wx.Frame.__init__(self, parent, size=(640, 480))
 
         self.camera = Camera(1)
-        video_view = VideoView(self, self.capture, 35)
-        video_view.play()
+        self.video_view = VideoView(self, self.capture)
+        self.video_view.play()
 
         box = wx.BoxSizer(wx.HORIZONTAL)
-        box.Add(video_view, 1, wx.ALL | wx.EXPAND, 0)
+        box.Add(self.video_view, 1, wx.ALL | wx.EXPAND, 0)
         self.SetSizer(box)
         self.Centre()
 

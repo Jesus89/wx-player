@@ -10,7 +10,7 @@ import wx._core
 class ImageView(wx.Panel):
 
     def __init__(self, parent, resize=True,
-                 quality=wx.IMAGE_QUALITY_NORMAL, size=(-1, -1), black=False, style=wx.NO_BORDER):
+                 quality=wx.IMAGE_QUALITY_NORMAL, size=(-1, -1), style=wx.NO_BORDER):
         wx.Panel.__init__(self, parent, size=size, style=style)
 
         self.x_offset = 0
@@ -21,9 +21,7 @@ class ImageView(wx.Panel):
         self.image = self.default_image
         self.bitmap = wx.BitmapFromImage(self.default_image)
 
-        if black:
-            self.SetBackgroundColour(wx.BLACK)
-        self.SetDoubleBuffered(True)
+        # self.SetDoubleBuffered(True)
 
         self.Bind(wx.EVT_SHOW, self.on_show)
         self.Bind(wx.EVT_PAINT, self.on_paint)
@@ -39,7 +37,9 @@ class ImageView(wx.Panel):
 
     def on_paint(self, event):
         if not self.hide:
-            dc = wx.PaintDC(self)
+            dc = wx.BufferedPaintDC(self)
+            dc.SetBackground(wx.BLACK_BRUSH)
+            dc.Clear()
             dc.DrawBitmap(self.bitmap, self.x_offset, self.y_offset)
 
     def on_resize(self, size):
