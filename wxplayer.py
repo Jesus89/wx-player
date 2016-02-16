@@ -23,8 +23,14 @@ class Frame(wx.Frame):
         self.SetSizer(box)
         self.Centre()
 
+        self.Bind(wx.EVT_CLOSE, self.on_close)
+
     def capture(self):
         return self.camera.capture_image(flush=0)
+
+    def on_close(self, event):
+        self.video_view.stop()
+        self.Destroy()
 
 
 class MyApp(wx.App):

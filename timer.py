@@ -10,21 +10,25 @@ from threading import Timer
 class PerpetualTimer(object):
 
     def __init__(self, t, function):
+        self.running = False
         self.t = t
         self.function = function
-        self.running = False
         self.thread = Timer(self.t, self.handle_function)
 
     def handle_function(self):
-        if self.running:
+        try:
             self.function()
             self.thread = Timer(self.t, self.handle_function)
             self.thread.start()
+        except:
+            pass
 
     def start(self):
-        self.running = True
-        self.thread.start()
+        if not self.running:
+            self.running = True
+            self.thread.start()
 
-    def cancel(self):
-        self.running = False
-        self.thread.cancel()
+    def stop(self):
+        if self.running:
+            self.running = False
+            self.thread.cancel()

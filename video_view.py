@@ -15,11 +15,7 @@ class VideoView(ImageView):
         ImageView.__init__(self, parent, size=size)
 
         self.callback = callback
-        self.playing = False
         self.timer = PerpetualTimer(0.05, self.on_timer)
-
-    def __del__(self):
-        self.timer.cancel()
 
     def on_timer(self):
         if self.callback is not None:
@@ -27,18 +23,12 @@ class VideoView(ImageView):
             wx.CallAfter(self.set_frame, frame)
 
     def play(self):
-        if not self.playing:
-            self.playing = True
-            self.timer.start()
+        self.timer.start()
 
     def pause(self):
-        if self.playing:
-            self.playing = False
-            self.timer.cancel()
+        self.timer.stop()
 
     def stop(self):
-        if self.playing:
-            self.playing = False
-            self.timer.cancel()
-            self.hide = True
-            self.set_default_image()
+        self.timer.stop()
+        self.hide = True
+        self.set_default_image()
