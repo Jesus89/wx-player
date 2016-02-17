@@ -17,16 +17,22 @@ class Frame(wx.Frame):
         self.camera = Camera(1)
         self.camera.set_resolution(960, 1280)
 
-        video_view = VideoView(self, self.capture)
-        video_view.play()
+        self.video_view = VideoView(self, self.capture)
+        self.video_view.start()
 
         box = wx.BoxSizer(wx.HORIZONTAL)
-        box.Add(video_view, 1, wx.ALL | wx.EXPAND, 0)
+        box.Add(self.video_view, 1, wx.ALL | wx.EXPAND, 0)
         self.SetSizer(box)
         self.Centre()
 
+        self.Bind(wx.EVT_CLOSE, self.on_close)
+
     def capture(self):
         return self.camera.capture_image(flush=0)
+
+    def on_close(self, event):
+        self.video_view.stop()
+        event.Skip()
 
 
 class MyApp(wx.App):
