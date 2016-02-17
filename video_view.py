@@ -15,7 +15,7 @@ class VideoView(ImageView):
         ImageView.__init__(self, parent, size=size)
 
         self.callback = callback
-        self.timer = PerpetualTimer(0.05, self.on_timer)
+        self.timer = PerpetualTimer(0.07, self.on_timer)
 
     def on_timer(self):
         if self.callback is not None:
@@ -24,9 +24,6 @@ class VideoView(ImageView):
 
     def play(self):
         self.timer.start()
-
-    def pause(self):
-        self.timer.stop()
 
     def stop(self):
         self.timer.stop()
