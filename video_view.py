@@ -27,7 +27,7 @@ class VideoView(ImageView):
             if self.callback is not None:
                 frame = self.callback()
                 wx.CallAfter(self.set_frame, frame)
-            time.sleep(0.035)
+            time.sleep(0.07)
 
     def play(self):
         if not self.playing:

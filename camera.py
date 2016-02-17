@@ -42,3 +42,19 @@ class Camera(object):
                     image = cv2.flip(image, 1)
                 image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
                 return image
+
+    def set_resolution(self, height, width):
+        if self._is_connected:
+            self._set_width(width)
+            self._set_height(height)
+            self._update_resolution()
+
+    def _set_width(self, value):
+        self._capture.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH, value)
+
+    def _set_height(self, value):
+        self._capture.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT, value)
+
+    def _update_resolution(self):
+        self._width = int(self._capture.get(cv2.cv.CV_CAP_PROP_FRAME_WIDTH))
+        self._height = int(self._capture.get(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT))

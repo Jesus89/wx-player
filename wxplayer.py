@@ -14,7 +14,9 @@ class Frame(wx.Frame):
     def __init__(self, parent):
         wx.Frame.__init__(self, parent, size=(640, 480))
 
-        self.camera = Camera(0)
+        self.camera = Camera(1)
+        self.camera.set_resolution(960, 1280)
+
         video_view = VideoView(self, self.capture)
         video_view.play()
 
